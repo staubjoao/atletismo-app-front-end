@@ -10,6 +10,14 @@ const routes: Routes = [
   {
     path: 'folder/:id',
     loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+  },
+  {
+    path: 'club-list',
+    loadChildren: () => import('./pages/club/club-list/club-list.module').then( m => m.ClubListPageModule)
+  },
+  {
+    path: 'club-registration-modal',
+    loadChildren: () => import('./pages/club/club-registration-modal/club-registration-modal.module').then( m => m.ClubRegistrationModalPageModule)
   }
 ];
 

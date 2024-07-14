@@ -5,26 +5,38 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'folder/Inbox',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () =>
+      import('./folder/folder.module').then((m) => m.FolderPageModule),
   },
   {
     path: 'club-list',
-    loadChildren: () => import('./pages/club/club-list/club-list.module').then( m => m.ClubListPageModule)
+    loadChildren: () =>
+      import('./pages/club/club-list/club-list.module').then(
+        (m) => m.ClubListPageModule
+      ),
   },
   {
     path: 'club-registration-modal',
-    loadChildren: () => import('./pages/club/club-registration-modal/club-registration-modal.module').then( m => m.ClubRegistrationModalPageModule)
-  }
+    loadChildren: () =>
+      import(
+        './pages/club/club-registration-modal/club-registration-modal.module'
+      ).then((m) => m.ClubRegistrationModalPageModule),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -21,4 +21,12 @@ export class ClubService {
     return this.http.post<Club>(this.apiUrl, club);
   }
 
+  getClubByCode(code: string): Observable<any> {
+    if (code === '') {
+      return new Observable();
+    }
+    const url = `${this.apiUrl}/findByCode/${code}`;
+    return this.http.get<any>(url);
+  }
+
 }

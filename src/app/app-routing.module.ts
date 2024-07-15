@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -8,17 +9,23 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./pages/sign-up/sign-up.module').then( m => m.SignUpPageModule)
+  },
+  {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'club-list',
-    loadChildren: () => import('./pages/club/club-list/club-list.module').then( m => m.ClubListPageModule)
+    loadChildren: () => import('./pages/club/club-list/club-list.module').then( m => m.ClubListPageModule),
+    canActivate: [AuthGuard],
   },
-  {
-    path: 'club-registration-modal',
-    loadChildren: () => import('./pages/club/club-registration-modal/club-registration-modal.module').then( m => m.ClubRegistrationModalPageModule)
-  }
 ];
 
 @NgModule({

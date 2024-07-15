@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +12,34 @@ export class LoginPage {
   email: string = '';
   password: string = '';
 
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private userService: UserService,
+    private alertController: AlertController
+  ) {}
 
   onLogin() {
-    if (this.email === 'test@test.com' && this.password === '123456') {
-      // Navigate to home or dashboard page
-      this.navCtrl.navigateForward('/home');
-    } else {
-      // Show error message
-      alert('Invalid credentials');
-    }
+    this.userService
+      .login({ email: this.email, password: this.password })
+      .subscribe(
+        (response) => {
+          // Handle successful login
+          console.log('Login successful', response);
+          // Navigate to home or dashboard page
+          this.navCtrl.navigateForward('/home');
+        },
+        async (error) => {
+          // Handle login error
+          console.error('Login failed', error);
+          // Show error message
+          const alert = await this.alertController.create({
+            header: 'Login Falhou',
+            message: 'Senha ou email incorretos. Tente Novamente',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      );
   }
 
   goToSignup() {

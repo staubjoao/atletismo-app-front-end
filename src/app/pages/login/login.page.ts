@@ -21,4 +21,9 @@ export class LoginPage {
       alert('Invalid credentials');
     }
   }
+
+  goToSignup() {
+    // Navigate to the signup page
+    this.navCtrl.navigateForward('/sign-up');
+  }
 }

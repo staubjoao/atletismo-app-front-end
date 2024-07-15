@@ -2,7 +2,7 @@ ion-content {
   --background: linear-gradient(135deg, #c0e8e0 0%, #f6e79b 100%);
 }
 
-.login-container {
+.signup-container {
   max-width: 400px;
   margin: auto;
   padding: 2rem;
@@ -31,7 +31,8 @@ ion-item {
   margin-bottom: 1rem;
 }
 
-ion-input {
+ion-input,
+ion-select {
   --padding-start: 1rem;
   --padding-end: 1rem;
   color: #000000;
@@ -54,15 +55,7 @@ ion-button:hover {
   --color: #000000;
 }
 
-.forgot-password {
-  text-align: center;
-  margin-top: 1rem;
-  color: #4a9e8c;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.signup-link {
+.login-link {
   text-align: center;
   margin-top: 1rem;
   color: #444444;

@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-title>Início</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div *ngIf="userRole === 'COACH'">
+    <h1>Treinador</h1>
+    <ion-button expand="block" (click)="addClub()">Adicionar Clube</ion-button>
+    <ion-button expand="block" (click)="addEvent()"
+      >Adicionar Evento</ion-button
+    >
+    <ion-button expand="block" (click)="addTrainingSchedule()"
+      >Adicionar Plano de Treinamento</ion-button
+    >
+    <ion-button expand="block" (click)="viewAthletes()">Ver Atletas</ion-button>
+  </div>
+
+  <div *ngIf="userRole === 'ATHLETE'">
+    <h1>Atleta</h1>
+    <h2>Próximas Sessões de Treinamento</h2>
+    <ion-list>
+      <ion-item *ngFor="let session of upcomingSessions">
+        {{ session.date | date }} - {{ session.description }}
+        <ion-button slot="end" (click)="logTrainingSession(session)"
+          >Registrar Sessão</ion-button
+        >
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" (click)="viewTrainingSchedule()"
+      >Ver Horário Completo</ion-button
+    >
+  </div>
 </ion-content>

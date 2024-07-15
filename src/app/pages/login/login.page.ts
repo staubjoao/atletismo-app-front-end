@@ -26,6 +26,7 @@ export class LoginPage {
           // Handle successful login
           console.log('Login successful', response);
           // Navigate to home or dashboard page
+          localStorage.setItem('role', response.role);
           this.navCtrl.navigateForward('/home');
         },
         async (error) => {

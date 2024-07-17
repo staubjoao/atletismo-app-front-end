@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Club } from 'src/app/models/club-modal';
 import { ClubService } from 'src/app/services/club.service';
 
 @Component({
-  selector: 'app-club-registration-modal',
-  templateUrl: './club-registration-modal.page.html',
-  styleUrls: ['./club-registration-modal.page.scss'],
+  selector: 'app-club-form',
+  templateUrl: './club-form.component.html',
+  styleUrls: ['./club-form.component.scss'],
 })
-export class ClubRegistrationModalPage {
+export class ClubFormComponent  implements OnInit {
 
   newClub: Club = { name: '' };
 
@@ -16,14 +16,17 @@ export class ClubRegistrationModalPage {
     private clubService: ClubService
   ) { }
 
+  ngOnInit() {}
+
   dismiss() {
     this.modalController.dismiss();
   }
 
   registerClub() {
+    console.log(this.newClub);
     this.clubService.createClub(this.newClub).subscribe(
       (response) => {
-        console.log('Club registered!', response);
+        console.log('Grupo registrado!', response);
         this.dismiss();
       },
       (error) => {

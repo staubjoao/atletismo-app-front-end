@@ -7,6 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AppComponent {
   public appPages = [
+    { title: 'Home', url: '/home', icon: 'home' },
     { title: 'Grupo', url: '/club-list', icon: 'people' },
     { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
     { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
@@ -14,7 +15,7 @@ export class AppComponent {
     { title: 'Trash', url: '/folder/trash', icon: 'trash' },
     { title: 'Spam', url: '/folder/spam', icon: 'warning' },
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   showMenu = true;
 
@@ -24,11 +25,11 @@ export class AppComponent {
         this.checkRoute(event.urlAfterRedirects);
       }
     });
-
   }
 
   checkRoute(url: string) {
     const noMenuRoutes = ['/login', '/sign-up'];
     this.showMenu = !noMenuRoutes.includes(url);
+    console.log(this.showMenu);
   }
 }

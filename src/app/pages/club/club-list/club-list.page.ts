@@ -1,7 +1,7 @@
 import { ClubService } from './../../../services/club.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ClubRegistrationModalPage } from '../club-registration-modal/club-registration-modal.page';
+import { ClubFormComponent } from '../club-form/club-form.component';
 
 @Component({
   selector: 'app-club-list',
@@ -33,7 +33,7 @@ export class ClubListPage implements OnInit {
 
   async openClubRegistrationModal() {
     const modal = await this.modalController.create({
-      component: ClubRegistrationModalPage
+      component: ClubFormComponent
     });
 
     modal.onDidDismiss().then(() => {

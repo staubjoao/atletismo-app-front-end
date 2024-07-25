@@ -36,6 +36,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/event/event-list/event-list.module').then( m => m.EventListPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'training-schedule',
+    loadChildren: () => import('./pages/training-schedule/training-schedule-list/training-schedule-list.module').then( m => m.TrainingScheduleListPageModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

@@ -10,12 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClubFormComponent } from './pages/club/club-form/club-form.component';
 import { FormsModule } from '@angular/forms';
 import { EventFormComponent } from './pages/event/event-form/event-form.component';
+import { TrainingScheduleFormComponent } from './pages/training-schedule/training-schedule-form/training-schedule-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClubFormComponent,
-    EventFormComponent
+    EventFormComponent,
+    TrainingScheduleFormComponent
   ],
   imports: [
     BrowserModule,

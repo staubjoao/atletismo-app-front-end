@@ -9,11 +9,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ClubFormComponent } from './pages/club/club-form/club-form.component';
 import { FormsModule } from '@angular/forms';
+import { EventFormComponent } from './pages/event/event-form/event-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClubFormComponent
+    ClubFormComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,

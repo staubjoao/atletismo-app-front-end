@@ -31,6 +31,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/club/club-list/club-list.module').then( m => m.ClubListPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'event-list',
+    loadChildren: () => import('./pages/event/event-list/event-list.module').then( m => m.EventListPageModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

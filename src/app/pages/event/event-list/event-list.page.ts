@@ -1,9 +1,9 @@
-import { ClubService } from './../../../services/club.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
+import { AthleteEventService } from '../../../services/athlete-event.service';
+import { EventService } from '../../../services/event.service';
+import { AuthService } from '../../../services/auth.service';
 import { EventFormComponent } from '../event-form/event-form.component';
-import { Event } from 'src/app/models/event-modal';
-import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-event-list',
@@ -11,38 +11,162 @@ import { EventService } from 'src/app/services/event.service';
   styleUrls: ['./event-list.page.scss'],
 })
 export class EventListPage implements OnInit {
-  events: Event[] = [];
+  events: any[] = [];
+  isCoach: boolean = false;
+  userId: number = localStorage.getItem('userId')
+    ? parseInt(localStorage.getItem('userId') as string)
+    : 0;
+  linkedEventId: number | null = null;
 
-  constructor(private eventService: EventService,
-    private modalController: ModalController
-  ) { }
+  constructor(
+    private eventService: EventService,
+    private athleteEventService: AthleteEventService,
+    private authService: AuthService,
+    private modalController: ModalController,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
-    this.findAllClub();
+    this.loadEvents();
+    this.checkUserRole();
   }
 
-  findAllClub() {
+  async checkUserRole() {
+    const userInfo = await this.authService.getUserInfo().toPromise();
+    this.isCoach = userInfo ? userInfo.role === 'COACH' : false;
+    this.userId = userInfo?.id ?? 0;
+    this.loadLinkedEvent();
+  }
+
+  loadEvents() {
     this.eventService.getAllEvents().subscribe(
-      (data) => {
-        this.events = data;
-        console.log(this.events);
+      (events) => {
+        this.events = events;
       },
       (error) => {
-        console.error('Erro ao obter clubes:', error);
+        console.error('Erro ao carregar eventos', error);
       }
     );
   }
 
   async openEventRegistrationModal() {
+    if (!this.isCoach) {
+      return;
+    }
+
     const modal = await this.modalController.create({
-      component: EventFormComponent
+      component: EventFormComponent,
     });
 
-    modal.onDidDismiss().then(() => {
-      this.findAllClub();
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        this.eventService.createEvent(result.data).subscribe(
+          (newEvent) => {
+            this.events.push(newEvent);
+          },
+          (error) => {
+            console.error('Erro ao criar eventos', error);
+          }
+        );
+      }
     });
 
     return await modal.present();
   }
 
+  loadLinkedEvent() {
+    if (!this.isCoach && this.userId) {
+      this.athleteEventService.findByAthlete(this.userId).subscribe(
+        (athleteEvents) => {
+          if (athleteEvents.length > 0) {
+            this.linkedEventId = athleteEvents[0].eventId;
+          }
+        },
+        (error) => {
+          console.error('Erro ao se vincular ao evento', error);
+        }
+      );
+    }
+  }
+
+  isLinkedToEvent(eventId: number): boolean {
+    return this.linkedEventId === eventId;
+  }
+
+  async unlinkFromEvent(event: any) {
+    const alert = await this.alertController.create({
+      header: 'Descvincular do evento',
+      message: `Você quer se desvincular do evento "${event.name}"?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Desvincular',
+          handler: () => {
+            this.athleteEventService.findByAthlete(this.userId).subscribe(
+              (athleteEvents) => {
+                if (athleteEvents.length > 0) {
+                  this.athleteEventService
+                    .deleteAthleteEvent(athleteEvents[0].id)
+                    .subscribe(
+                      () => {
+                        console.log('Successfully unlinked from event');
+                        this.linkedEventId = null;
+                      },
+                      (error) => {
+                        console.error('Error unlinking from event', error);
+                      }
+                    );
+                }
+              },
+              (error) => {
+                console.error('Error finding athlete event', error);
+              }
+            );
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async linkToEvent(event: any) {
+    if (this.isCoach || this.linkedEventId) {
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: 'Vincular-se ao evento',
+      message: `Você quer se vincular ao evento "${event.name}"?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Vincular',
+          handler: () => {
+            const dto = {
+              athleteId: this.userId,
+              eventId: event.id,
+            };
+            this.athleteEventService.createAthleteEvent(dto).subscribe(
+              () => {
+                console.log('Successfully linked to event');
+                this.linkedEventId = event.id;
+              },
+              (error) => {
+                console.error('Error linking to event', error);
+              }
+            );
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
 }

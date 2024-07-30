@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
   }
 
   loadUserInfo() {
+    console.log(this.userInfo);
     const userEmail = localStorage.getItem('email');
     if (userEmail) {
       this.authService.getUserByEmail(userEmail).subscribe(
@@ -37,6 +38,7 @@ export class HomePage implements OnInit {
             club: 'Carregando...',
           };
 
+          console.log('User info:', this.userInfo);
           if (info.clubId) {
             this.clubService.getClubById(info.clubId.toString()).subscribe(
               (clubInfo) => {

@@ -5,13 +5,12 @@ import { environment } from '../../environments/environment';
 import { User } from '../models/user-model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private apiUrl = `${environment.apiUrl}/user`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
@@ -31,5 +30,12 @@ export class AuthService {
     const url = `${environment.apiUrl}/auth/login`;
     return this.http.post<User>(url, user);
   }
-
+  getUserByEmail(email: string): Observable<any> {
+    if (email === '') {
+      return new Observable();
+    }
+    const url = `${this.apiUrl}/findByEmail/${email}`;
+    console.log('aa');
+    return this.http.get<any>(url);
+  }
 }

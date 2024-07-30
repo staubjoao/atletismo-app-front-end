@@ -5,16 +5,20 @@ import { environment } from '../../environments/environment';
 import { Club } from '../models/club-modal';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClubService {
-
   private apiUrl = `${environment.apiUrl}/club`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllClubs(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
+  }
+
+  getClubById(id: string): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<any>(url);
   }
 
   createClub(club: Club): Observable<any> {
@@ -28,5 +32,4 @@ export class ClubService {
     const url = `${this.apiUrl}/findByCode/${code}`;
     return this.http.get<any>(url);
   }
-
 }

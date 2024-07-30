@@ -6,47 +6,67 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'sign-up',
-    loadChildren: () => import('./pages/sign-up/sign-up.module').then( m => m.SignUpPageModule)
+    loadChildren: () =>
+      import('./pages/sign-up/sign-up.module').then((m) => m.SignUpPageModule),
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule),
+    loadChildren: () =>
+      import('./folder/folder.module').then((m) => m.FolderPageModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomePageModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'club-list',
-    loadChildren: () => import('./pages/club/club-list/club-list.module').then( m => m.ClubListPageModule),
+    loadChildren: () =>
+      import('./pages/club/club-list/club-list.module').then(
+        (m) => m.ClubListPageModule
+      ),
     canActivate: [AuthGuard],
   },
   {
     path: 'event-list',
-    loadChildren: () => import('./pages/event/event-list/event-list.module').then( m => m.EventListPageModule),
+    loadChildren: () =>
+      import('./pages/event/event-list/event-list.module').then(
+        (m) => m.EventListPageModule
+      ),
     canActivate: [AuthGuard],
   },
   {
     path: 'training-schedule',
-    loadChildren: () => import('./pages/training-schedule/training-schedule-list/training-schedule-list.module').then( m => m.TrainingScheduleListPageModule),
+    loadChildren: () =>
+      import(
+        './pages/training-schedule/training-schedule-list/training-schedule-list.module'
+      ).then((m) => m.TrainingScheduleListPageModule),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'list-users',
+    loadChildren: () =>
+      import('./pages/list-users/list-users.module').then(
+        (m) => m.ListUsersPageModule
+      ),
   },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

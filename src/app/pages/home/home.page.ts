@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClubService } from 'src/app/services/club.service';
-import { forkJoin } from 'rxjs';
+import { User } from '../../models/user-model';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +9,13 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  userInfo: {
-    name: string;
-    role: string;
-    club: string;
-    email: string;
-  } = {
+  userInfo: User & { club: string } = {
+    id: 0,
     name: '',
+    email: '',
+    password: '',
     role: '',
     club: '',
-    email: '',
   };
 
   constructor(
@@ -32,27 +29,21 @@ export class HomePage implements OnInit {
 
   loadUserInfo() {
     const userEmail = localStorage.getItem('email');
-    console.log('User email', userEmail);
     if (userEmail) {
       this.authService.getUserByEmail(userEmail).subscribe(
-        (info) => {
+        (info: User) => {
           this.userInfo = {
-            name: info.name,
-            role: info.role,
-            club: 'Loading...', // We'll update this after fetching club info
-            email: info.email,
+            ...info,
+            club: 'Carregando...',
           };
 
-          // If the user has a clubId, fetch the club details
           if (info.clubId) {
-            console.log('User clubId', info.clubId);
-            this.clubService.getClubById(info.clubId).subscribe(
+            this.clubService.getClubById(info.clubId.toString()).subscribe(
               (clubInfo) => {
-                this.userInfo.club = clubInfo.name || 'Unknown Club';
+                this.userInfo.club = clubInfo.name || 'Sem clube';
               },
               (error) => {
-                console.error('Error loading club info', error);
-                this.userInfo.club = 'Error loading club';
+                this.userInfo.club = 'Erro ao carregar clube';
               }
             );
           } else {

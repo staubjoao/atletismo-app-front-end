@@ -38,4 +38,30 @@ export class AuthService {
     console.log('aa');
     return this.http.get<any>(url);
   }
+  getUserInfo(): Observable<User> {
+    const email = localStorage.getItem('email') as any;
+
+    return this.getUserByEmail(email);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('email');
+  }
+
+  removeUser(id: number): Observable<any> {
+    console.log('id', id);
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<any>(url);
+  }
+  getUsersByClubId(
+    clubId: string,
+    page: number,
+    pageSize: number
+  ): Observable<User[]> {
+    return this.http.get<User[]>(
+      `${this.apiUrl}/getUsersByClubId/${clubId}?page=${page}&pageSize=${pageSize}`
+    );
+  }
 }

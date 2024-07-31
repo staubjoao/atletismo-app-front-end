@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,13 +12,15 @@ import { FormsModule } from '@angular/forms';
 import { EventFormComponent } from './pages/event/event-form/event-form.component';
 import { TrainingScheduleFormComponent } from './pages/training-schedule/training-schedule-form/training-schedule-form.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { TrainingScheduleViewComponent } from './pages/training-schedule/training-schedule-view/training-schedule-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClubFormComponent,
     EventFormComponent,
-    TrainingScheduleFormComponent
+    TrainingScheduleFormComponent,
+    TrainingScheduleViewComponent
   ],
   imports: [
     BrowserModule,

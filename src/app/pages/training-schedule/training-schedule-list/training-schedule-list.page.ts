@@ -13,12 +13,16 @@ export class TrainingScheduleListPage implements OnInit {
 
   trainingSchedules: TrainingSchedule[] = [];
 
+  days: number[] = [];
+  monthYear: string = "";
+
   constructor(private trainingScheduleService: TrainingScheduleService,
     private modalController: ModalController
   ) { }
 
   ngOnInit() {
     this.findAllClub();
+    this.loadDays();
   }
 
   findAllClub() {
@@ -33,6 +37,18 @@ export class TrainingScheduleListPage implements OnInit {
     );
   }
 
+  loadDays() {
+    const today = new Date();
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const lastDayOfNextMonth = new Date(nextMonth.getFullYear(), nextMonth.getMonth() + 1, 0);
+
+    this.monthYear = `${nextMonth.toLocaleString('default', { month: 'long' })} ${nextMonth.getFullYear()}`;
+
+    for (let day = 1; day <= lastDayOfNextMonth.getDate(); day++) {
+      this.days.push(day);
+    }
+  }
+
   async openTrainingSchedulesRegistrationModal() {
     const modal = await this.modalController.create({
       component: TrainingScheduleFormComponent
@@ -43,6 +59,12 @@ export class TrainingScheduleListPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  onDateChange(event: CustomEvent) {
+    console.log(event);
+    // this.selectedDate = event.detail.value;
+    // this.openTrainingDetails();
   }
 
 }

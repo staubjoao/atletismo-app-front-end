@@ -3,16 +3,20 @@
     <ion-menu contentId="main-content" type="overlay" *ngIf="showMenu">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
-
+          <ion-list-header>{{emailLogado}}</ion-list-header>
+          <br>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-item lines="none" detail="false" (click)="logout()" class="logout-item">
+            <ion-icon aria-hidden="true" slot="start" [ios]="'log-out-outline'" [md]="'log-out-sharp'"></ion-icon>
+            <ion-label>Sair</ion-label>
+          </ion-item>
         </ion-list>
+
 
         <!-- <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>

@@ -11,6 +11,7 @@ import { ClubFormComponent } from './pages/club/club-form/club-form.component';
 import { FormsModule } from '@angular/forms';
 import { EventFormComponent } from './pages/event/event-form/event-form.component';
 import { TrainingScheduleFormComponent } from './pages/training-schedule/training-schedule-form/training-schedule-form.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { TrainingScheduleFormComponent } from './pages/training-schedule/trainin
     IonicModule.forRoot(),
     FormsModule,
     AppRoutingModule,
-    HttpClientModule],
+    HttpClientModule,
+    FullCalendarModule],
   providers: [{
     provide: RouteReuseStrategy,
     useClass: IonicRouteStrategy

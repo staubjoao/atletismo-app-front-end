@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TrainingSchedule } from 'src/app/models/training-schedule-modal';
 import { TrainingScheduleService } from 'src/app/services/training-schedule.service';
+import { TrainingScheduleViewComponent } from '../training-schedule-view/training-schedule-view.component';
 
 @Component({
   selector: 'app-training-schedule-list',
@@ -15,6 +16,7 @@ export class TrainingScheduleListPage implements OnInit {
 
   days: number[] = [];
   monthYear: string = "";
+  datetime: any;
 
   constructor(private trainingScheduleService: TrainingScheduleService,
     private modalController: ModalController
@@ -61,10 +63,24 @@ export class TrainingScheduleListPage implements OnInit {
     return await modal.present();
   }
 
-  onDateChange(event: CustomEvent) {
-    console.log(event);
-    // this.selectedDate = event.detail.value;
-    // this.openTrainingDetails();
+  async showTraining() {
+    const selectedDateISO = new Date(this.datetime).toISOString().split('T')[0];
+    const selectedTraining = this.trainingSchedules.find(training =>
+      training.startTime.split('T')[0] === selectedDateISO
+    );
+
+    if (selectedTraining) {
+      const modal = await this.modalController.create({
+        component: TrainingScheduleViewComponent,
+        componentProps: {
+          training: selectedTraining
+        }
+      });
+      return await modal.present();
+    } else {
+      // Trate o caso onde não há treino para a data selecionada
+      console.log('Nenhum treino encontrado para a data selecionada.');
+    }
   }
 
 }

@@ -36,6 +36,15 @@
             <p>{{ userInfo.email }}</p>
           </ion-label>
         </ion-item>
+        <ion-item *ngIf="userInfo.club === 'Sem Clube'">
+          <ion-input
+            placeholder="Insira o código do clube"
+            [(ngModel)]="clubCode"
+            (keyup.enter)="updateClub()"
+          >
+          </ion-input>
+          <ion-button (click)="updateClub()">Entrar</ion-button>
+        </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>

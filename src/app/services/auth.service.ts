@@ -26,6 +26,11 @@ export class AuthService {
     return this.http.post<User>(this.apiUrl, user);
   }
 
+  updateUser(user: User): Observable<any> {
+    const url = `${this.apiUrl}/${user.email}`;
+    return this.http.patch<User>(url, user);
+  }
+
   login(user: any): Observable<any> {
     const url = `${environment.apiUrl}/auth/login`;
     return this.http.post<User>(url, user);
@@ -40,7 +45,6 @@ export class AuthService {
   }
   getUserInfo(): Observable<User> {
     const email = localStorage.getItem('email') as any;
-
     return this.getUserByEmail(email);
   }
 

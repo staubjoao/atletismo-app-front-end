@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
     role: '',
     club: '',
   };
+  clubCode: string = '';
 
   constructor(
     private authService: AuthService,
@@ -49,7 +50,7 @@ export class HomePage implements OnInit {
               }
             );
           } else {
-            this.userInfo.club = 'Not assigned';
+            this.userInfo.club = 'Sem Clube';
           }
         },
         (error) => {
@@ -58,6 +59,43 @@ export class HomePage implements OnInit {
       );
     } else {
       console.error('User email not found in localStorage');
+    }
+  }
+
+  updateClub() {
+    if (this.clubCode) {
+      this.clubService.getClubByCode(this.clubCode).subscribe(
+        (clubInfo) => {
+          if (clubInfo) {
+            const updatedUserData = {
+              name: this.userInfo.name,
+              email: this.userInfo.email,
+              password: this.userInfo.password,
+              clubId: clubInfo.id,
+              role: this.userInfo.role,
+            };
+
+            this.authService.updateUser(updatedUserData).subscribe(
+              (updatedUser) => {
+                this.userInfo.club = clubInfo.name;
+                this.userInfo.clubId = clubInfo.id;
+                this.clubCode = '';
+                console.log('User updated successfully', updatedUser);
+              },
+              (error) => {
+                console.error('Error updating user', error);
+              }
+            );
+          } else {
+            console.error('Club not found');
+          }
+        },
+        (error) => {
+          console.error('Error finding club', error);
+        }
+      );
+    } else {
+      console.error('Club code is required.');
     }
   }
 }

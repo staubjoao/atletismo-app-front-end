@@ -10,11 +10,12 @@ export class AppComponent {
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },
     { title: 'Grupo', url: '/club-list', icon: 'people' },
-    { title: 'Modalidade', url: '/event-list', icon: 'paper-plane' },
-    { title: 'Cronograma de treino', url: '/training-schedule', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
+    { title: 'Modalidade', url: '/event-list', icon: 'flame' },
+    { title: 'Cronograma de treino', url: '/training-schedule', icon: 'calendar' },
+    { title: 'Atletas', url: '/list-users', icon: 'person' },
     { title: 'Trash', url: '/folder/trash', icon: 'trash' },
   ];
+
   // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   emailLogado = "teste";

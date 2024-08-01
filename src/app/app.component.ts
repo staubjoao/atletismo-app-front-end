@@ -1,6 +1,7 @@
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -8,22 +9,18 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Grupo', url: '/club-list', icon: 'people' },
-    { title: 'Modalidade', url: '/event-list', icon: 'flame' },
-    { title: 'Cronograma de treino', url: '/training-schedule', icon: 'calendar' },
-    { title: 'Atletas', url: '/list-users', icon: 'person' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
+    { title: 'Home', url: '/home', icon: 'home', roles: ['COACH', 'ATHLETE'] },
+    { title: 'Grupo', url: '/club-list', icon: 'people', roles: ['COACH'] },
+    { title: 'Modalidade', url: '/event-list', icon: 'flame', roles: ['COACH'] },
+    { title: 'Cronograma de treino', url: '/training-schedule', icon: 'calendar', roles: ['COACH', 'ATHLETE'] },
+    { title: 'Atletas', url: '/list-users', icon: 'person', roles: ['COACH'] },
   ];
 
-  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
-  emailLogado = "teste";
+  emailLogado = '';
   showMenu = true;
+  userRole = '';
 
-  constructor(private router: Router,
-    private authService: AuthService
-  ) {
+  constructor(private router: Router, private authService: AuthService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.checkRoute(event.urlAfterRedirects);
@@ -31,6 +28,11 @@ export class AppComponent {
     });
 
     this.emailLogado = localStorage.getItem('email')!;
+    this.userRole = localStorage.getItem('role')!;
+  }
+
+  getFilteredPages() {
+    return this.appPages.filter(page => page.roles.includes(this.userRole));
   }
 
   checkRoute(url: string) {

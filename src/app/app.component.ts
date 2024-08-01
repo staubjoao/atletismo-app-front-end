@@ -11,8 +11,18 @@ export class AppComponent {
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home', roles: ['COACH', 'ATHLETE'] },
     { title: 'Grupo', url: '/club-list', icon: 'people', roles: ['COACH'] },
-    { title: 'Modalidade', url: '/event-list', icon: 'flame', roles: ['COACH'] },
-    { title: 'Cronograma de treino', url: '/training-schedule', icon: 'calendar', roles: ['COACH', 'ATHLETE'] },
+    {
+      title: 'Modalidade',
+      url: '/event-list',
+      icon: 'flame',
+      roles: ['COACH', 'ATHLETE'],
+    },
+    {
+      title: 'Cronograma de treino',
+      url: '/training-schedule',
+      icon: 'calendar',
+      roles: ['COACH', 'ATHLETE'],
+    },
     { title: 'Atletas', url: '/list-users', icon: 'person', roles: ['COACH'] },
   ];
 
@@ -32,7 +42,7 @@ export class AppComponent {
   }
 
   getFilteredPages() {
-    return this.appPages.filter(page => page.roles.includes(this.userRole));
+    return this.appPages.filter((page) => page.roles.includes(this.userRole));
   }
 
   checkRoute(url: string) {

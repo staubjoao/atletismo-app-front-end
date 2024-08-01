@@ -1,5 +1,5 @@
 ion-content {
-  --background: linear-gradient(135deg, #c0e8e0 0%, #f6e79b 100%);
+  --background: linear-gradient(135deg, #a4c8f0 0%, #e0e7fc 100%);
 }
 
 .login-container {
@@ -38,7 +38,7 @@ ion-input {
 }
 
 ion-button {
-  --background: #4a9e8c;
+  --background: #0454ec;
   --color: #ffffff;
   --border-radius: 25px;
   margin-top: 1.5rem;
@@ -46,18 +46,18 @@ ion-button {
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  --box-shadow: 0 4px 15px rgba(74, 158, 140, 0.3);
+  --box-shadow: 0 4px 15px rgba(4, 84, 236, 0.3);
 }
 
 ion-button:hover {
-  --background: #f6e79b;
-  --color: #000000;
+  --background: #023aa8;
+  --color: #ffffff;
 }
 
 .forgot-password {
   text-align: center;
   margin-top: 1rem;
-  color: #4a9e8c;
+  color: #0454ec;
   font-weight: 500;
   cursor: pointer;
 }
@@ -69,7 +69,7 @@ ion-button:hover {
   font-weight: 500;
 
   a {
-    color: #4a9e8c;
+    color: #0454ec;
     cursor: pointer;
     text-decoration: none;
     font-weight: 600;

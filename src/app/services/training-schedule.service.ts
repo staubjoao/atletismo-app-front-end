@@ -5,28 +5,38 @@ import { environment } from '../../environments/environment';
 import { TrainingSchedule } from '../models/training-schedule-modal';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrainingScheduleService {
-
   private apiUrl = `${environment.apiUrl}/training-schedule`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllTrainingSchedule(): Observable<TrainingSchedule[]> {
     return this.http.get<TrainingSchedule[]>(this.apiUrl);
   }
 
-  createTrainingSchedule(trainingSchedule: TrainingSchedule): Observable<TrainingSchedule> {
-    return this.http.post<TrainingSchedule>(this.apiUrl, trainingSchedule);
+  findByEventId(eventId: number): Observable<TrainingSchedule[]> {
+    return this.http.get<TrainingSchedule[]>(
+      `${this.apiUrl}/findByEventId/${eventId}`
+    );
   }
 
-  // getClubByCode(code: string): Observable<any> {
-  //   if (code === '') {
-  //     return new Observable();
-  //   }
-  //   const url = `${this.apiUrl}/findByCode/${code}`;
-  //   return this.http.get<any>(url);
-  // }
+  findByClubId(clubId: number): Observable<TrainingSchedule[]> {
+    return this.http.get<TrainingSchedule[]>(
+      `${this.apiUrl}/findByClubId/${clubId}`
+    );
+  }
 
+  findByUserId(userId: number): Observable<TrainingSchedule[]> {
+    return this.http.get<TrainingSchedule[]>(
+      `${this.apiUrl}/findByUserId/${userId}`
+    );
+  }
+
+  createTrainingSchedule(
+    trainingSchedule: TrainingSchedule
+  ): Observable<TrainingSchedule> {
+    return this.http.post<TrainingSchedule>(this.apiUrl, trainingSchedule);
+  }
 }

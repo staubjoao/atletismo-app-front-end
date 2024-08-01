@@ -12,8 +12,13 @@
     <ion-grid class="center-content">
       <ion-row>
         <ion-col class="ion-text-center">
-          <ion-datetime presentation="date" [(ngModel)]="datetime"></ion-datetime>
-          <ion-button expand="full" (click)="showTraining()">Visualizar Treino</ion-button>
+          <ion-datetime
+            presentation="date"
+            [(ngModel)]="datetime"
+          ></ion-datetime>
+          <ion-button expand="full" (click)="showTraining()"
+            >Visualizar Treino</ion-button
+          >
         </ion-col>
       </ion-row>
     </ion-grid>

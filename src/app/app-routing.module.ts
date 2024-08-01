@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),
     canActivate: [AuthGuard],
-    data: { roles: ['COACH', 'ATHLETE'] }
+    data: { roles: ['COACH', 'ATHLETE'] },
   },
   {
     path: 'club-list',
@@ -32,7 +32,7 @@ const routes: Routes = [
         (m) => m.ClubListPageModule
       ),
     canActivate: [AuthGuard],
-    data: { roles: ['COACH'] }
+    data: { roles: ['COACH'] },
   },
   {
     path: 'event-list',
@@ -41,7 +41,7 @@ const routes: Routes = [
         (m) => m.EventListPageModule
       ),
     canActivate: [AuthGuard],
-    data: { roles: ['COACH'] }
+    data: { roles: ['COACH', 'ATHLETE'] },
   },
   {
     path: 'training-schedule',
@@ -50,7 +50,7 @@ const routes: Routes = [
         './pages/training-schedule/training-schedule-list/training-schedule-list.module'
       ).then((m) => m.TrainingScheduleListPageModule),
     canActivate: [AuthGuard],
-    data: { roles: ['COACH', 'ATHLETE'] }
+    data: { roles: ['COACH', 'ATHLETE'] },
   },
   {
     path: 'list-users',
@@ -59,7 +59,7 @@ const routes: Routes = [
         (m) => m.ListUsersPageModule
       ),
     canActivate: [AuthGuard],
-    data: { roles: ['COACH'] }
+    data: { roles: ['COACH'] },
   },
 ];
 
@@ -69,4 +69,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

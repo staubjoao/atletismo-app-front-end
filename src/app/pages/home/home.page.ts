@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Import Router
 import { AuthService } from 'src/app/services/auth.service';
 import { ClubService } from 'src/app/services/club.service';
 import { User } from '../../models/user-model';
@@ -21,7 +22,8 @@ export class HomePage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private clubService: ClubService
+    private clubService: ClubService,
+    private router: Router // Inject Router
   ) {}
 
   ngOnInit() {
@@ -44,8 +46,10 @@ export class HomePage implements OnInit {
             this.clubService.getClubById(info.clubId.toString()).subscribe(
               (clubInfo) => {
                 this.userInfo.club = clubInfo.name || 'Sem clube';
+                localStorage.setItem('clubId', clubInfo.id);
               },
               (error) => {
+                localStorage.setItem('clubId', '0');
                 this.userInfo.club = 'Erro ao carregar clube';
               }
             );
@@ -79,10 +83,13 @@ export class HomePage implements OnInit {
               (updatedUser) => {
                 this.userInfo.club = clubInfo.name;
                 this.userInfo.clubId = clubInfo.id;
+                localStorage.setItem('clubId', clubInfo.id);
                 this.clubCode = '';
                 console.log('User updated successfully', updatedUser);
+                this.router.navigate(['/home']);
               },
               (error) => {
+                localStorage.setItem('clubId', '0');
                 console.error('Error updating user', error);
               }
             );

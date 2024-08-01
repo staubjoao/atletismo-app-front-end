@@ -29,6 +29,7 @@ export class LoginPage {
         localStorage.setItem('role', response.role);
         localStorage.setItem('token', response.access_token);
         localStorage.setItem('email', this.email);
+        localStorage.setItem('userId', response.userId);
         this.navCtrl.navigateForward('/home');
       },
       async (error) => {

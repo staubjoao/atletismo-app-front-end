@@ -61,6 +61,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['COACH'] },
   },
+  {
+    path: 'excel-upload',
+    loadChildren: () => import('./excel-upload/excel-upload.module').then( m => m.ExcelUploadPageModule),
+    canActivate: [AuthGuard],
+    data: { roles: ['COACH'] },
+  },
 ];
 
 @NgModule({

@@ -39,4 +39,11 @@ export class TrainingScheduleService {
   ): Observable<TrainingSchedule> {
     return this.http.post<TrainingSchedule>(this.apiUrl, trainingSchedule);
   }
+
+  uploadExcelFile(file: File, eventId: number): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post(`${this.apiUrl}/upload/excel/${eventId}`, formData);
+  }
 }

@@ -24,6 +24,7 @@ export class AppComponent {
       roles: ['COACH', 'ATHLETE'],
     },
     { title: 'Atletas', url: '/list-users', icon: 'person', roles: ['COACH'] },
+    {title: 'Criar treino', url: '/excel-upload', icon: 'add', roles: ['COACH'] },
   ];
 
   emailLogado = '';

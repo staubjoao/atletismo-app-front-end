@@ -20,6 +20,12 @@ export class EventService {
       `${this.apiUrl}/findByTrainingScheduleId/${trainingScheduleId}`
     );
   }
+
+  findByClubId(clubId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/findByClubId/${clubId}`);
+  }
+
+
   createEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(this.apiUrl, event);
   }

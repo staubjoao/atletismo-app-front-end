@@ -10,25 +10,30 @@ import { ClubFormComponent } from '../club-form/club-form.component';
 })
 export class ClubListPage implements OnInit {
   clubs: any[] = [];
+  userId: string = '';
 
   constructor(private clubService: ClubService,
     private modalController: ModalController
   ) { }
 
   ngOnInit() {
-    this.findAllClub();
+    this.userId = localStorage.getItem('userId') || '';
+
+    this.findByClubId();
   }
 
-  findAllClub() {
-    this.clubService.getAllClubs().subscribe(
-      (data) => {
-        this.clubs = data;
-        console.log(this.clubs);
-      },
-      (error) => {
-        console.error('Erro ao obter clubes:', error);
-      }
-    );
+  findByClubId() {
+    if(this.userId !== '') {    
+      this.clubService.getByUserId(this.userId).subscribe(
+        (data) => {
+          this.clubs = data;
+          console.log(this.clubs);
+        },
+        (error) => {
+          console.error('Erro ao obter clubes:', error);
+        }
+      );
+    }
   }
 
   async openClubRegistrationModal() {
@@ -37,7 +42,7 @@ export class ClubListPage implements OnInit {
     });
 
     modal.onDidDismiss().then(() => {
-      this.findAllClub();
+      this.findByClubId();
     });
 
     return await modal.present();
